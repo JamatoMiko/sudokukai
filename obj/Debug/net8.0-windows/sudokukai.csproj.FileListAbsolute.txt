@@ -1,0 +1,14 @@
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.GeneratedMSBuildEditorConfig.editorconfig
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.AssemblyInfoInputs.cache
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.AssemblyInfo.cs
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.csproj.CoreCompileInputs.cache
+d:\新しいフォルダー (3)\C#\sudokukai\bin\Debug\net8.0-windows\sudokukai.exe
+d:\新しいフォルダー (3)\C#\sudokukai\bin\Debug\net8.0-windows\sudokukai.deps.json
+d:\新しいフォルダー (3)\C#\sudokukai\bin\Debug\net8.0-windows\sudokukai.runtimeconfig.json
+d:\新しいフォルダー (3)\C#\sudokukai\bin\Debug\net8.0-windows\sudokukai.dll
+d:\新しいフォルダー (3)\C#\sudokukai\bin\Debug\net8.0-windows\sudokukai.pdb
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.dll
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\refint\sudokukai.dll
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.pdb
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.genruntimeconfig.cache
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\ref\sudokukai.dll
