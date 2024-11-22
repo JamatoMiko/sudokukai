@@ -26,7 +26,7 @@ public partial class Form1 : Form
     public Form1()//コンストラクタ
     {
         board = new Board();//現在の盤面
-        board.Generator(1);
+        board.Generator(80);
         solved_board = new Board();//解決された盤面
         Array.Copy(board._cell, solved_board._cell, board._cell.Length);//盤面をコピー
         solved_board.UpdateBoard();
