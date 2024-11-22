@@ -21,23 +21,11 @@ public partial class Form1 : Form
     int _cursor_row = 0;
     int _cursor_column = 0;
     int _cursor_number;
-    bool[,] _changeable;
     bool[,] _match;
     public Form1()//コンストラクタ
     {
         board = new Board();//現在の盤面
         board.Generator(80);
-        _changeable = new bool[9,9];
-        for (int i = 0; i < 9; i++)
-        {
-            for (int j = 0; j < 9; j++)
-            {
-                if (board._cell[i, j] == 0)//空のマスの_changeableをtrueにする
-                {
-                    _changeable[i, j] = true;
-                }
-            }
-        }
         solved_board = new Board();//解決された盤面
         Array.Copy(board._cell, solved_board._cell, board._cell.Length);//盤面をコピー
         solved_board.UpdateBoard();
@@ -166,19 +154,11 @@ public partial class Form1 : Form
     {
         Label numbers = (Label) sender;
         int number = int.Parse(numbers.Text);
-        if (_changeable[_cursor_row, _cursor_column] == true)
-        {
-            board._cell[_cursor_row, _cursor_column] = number;
-            board.UpdateBoard();
-        }
+        board.InputCell(_cursor_row, _cursor_column, number);
     }
     void ClickErace(object sender, EventArgs e)//消去をクリックしたときのイベント
     {
-        if (_changeable[_cursor_row, _cursor_column] == true)
-        {
-            board._cell[_cursor_row, _cursor_column] = 0;
-            board.UpdateBoard();
-        }
+        board.InputCell(_cursor_row, _cursor_column, 0);
     }
     protected override void OnPaint(PaintEventArgs e)//描画処理
     {
@@ -302,11 +282,11 @@ public partial class Form1 : Form
             {
                 if (board._cell[i, j] > 0)
                 {
-                    if (_changeable[i, j] == false)//元からある数字
+                    if (board._changeable[i, j] == false)//元からある数字
                     {
                         e.Graphics.DrawString($"{board._cell[i, j]}", font, brush4, 32*j+6, 32*i+2);
                     }
-                    if (_changeable[i, j] == true)//入力した数字
+                    if (board._changeable[i, j] == true)//入力した数字
                     {
                         e.Graphics.DrawString($"{board._cell[i, j]}", font, brush5, 32*j+6, 32*i+2);
                     }

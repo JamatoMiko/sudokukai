@@ -27,6 +27,8 @@ namespace sudokukai;
 //矛盾がないか調べるメソッドを作る、_block、_row、_columnごとに数字の重複がないか調べる、Solverの始めに実行し矛盾があった場合エラーになる
 //マスごとの消去法、数字ごとの消去法の二つで解けない場合、総当たりに移行
 
+//Solverに_cellの配列を渡すと、解決された別の配列が返される、_cellに直接変更を加えないようにする
+
 public class Board
 {
     //_cell[行, 列]
@@ -64,6 +66,8 @@ public class Board
     bool[,] _column = new bool[9, 9];
     //マスに数字が入るかどうか
     bool[,,] _po_num = new bool[9, 9, 9];
+    //マスの数字を変更できるか
+    public bool[,] _changeable = new bool[9, 9];
     //乱数オブジェクト
     Random rnd = new Random();
     public Board()//コンストラクタ
@@ -71,7 +75,17 @@ public class Board
         //DebugCell();
         UpdateBoard();
     }
+    //プロパティ//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //メソッド////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void InputCell(int row, int column, int number = 0)//_cellに数字を入力する
+    {
+        if (_changeable[row, column] == true)
+        {
+            _cell[row, column] = number;
+            UpdateBoard();
+        }
+    }
     public bool Solver()//与えられた問題を解決し、解決出来たらtrueを返す、出来なかったらfalseを返す
     {
         int cnt = 0;
@@ -316,12 +330,15 @@ public class Board
                     {
                         //DebugCell();
                         Debug.WriteLine($"{i}/{blank}");
+                        InitializeChangeableCell();
                         return;
                     }
                 }
             }
         }
         //DebugCell();
+        InitializeChangeableCell();
+        return;
     }
     bool GenerateCompletedBoard()
     {
@@ -447,6 +464,23 @@ public class Board
             }
         }
         UpdateBoard();
+    }
+    void InitializeChangeableCell()//_changeableの初期化、現在埋まっているマスを変更できないようにする
+    {
+        for (int row = 0; row < 9; row++)
+        {
+            for (int column = 0; column < 9; column++)
+            {
+                if (_cell[row, column] == 0)
+                {
+                    _changeable[row, column] = true;
+                }
+                else
+                {
+                    _changeable[row, column] = false;
+                }
+            }
+        }
     }
     public void UpdateBoard()//全般の情報の更新
     {
