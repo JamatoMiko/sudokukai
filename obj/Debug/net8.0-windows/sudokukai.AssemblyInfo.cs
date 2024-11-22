@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("sudokukai")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df56fc73f530a6c513bb883e89018780b8a75a9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+deacb6ebc73e93e7d43e6a012870a770ff9d7eab")]
 [assembly: System.Reflection.AssemblyProductAttribute("sudokukai")]
 [assembly: System.Reflection.AssemblyTitleAttribute("sudokukai")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -17,6 +17,7 @@ public partial class Form1 : Form
     Board solved_board;
     System.Windows.Forms.Timer timer;
     Point point;
+    Label[] numbers = new Label[9];
     //列(column)がx座標、行(row)がy座標なことに注意
     int _cursor_row = 0;
     int _cursor_column = 0;
@@ -25,7 +26,7 @@ public partial class Form1 : Form
     public Form1()//コンストラクタ
     {
         board = new Board();//現在の盤面
-        board.Generator(80);
+        board.Generator(1);
         solved_board = new Board();//解決された盤面
         Array.Copy(board._cell, solved_board._cell, board._cell.Length);//盤面をコピー
         solved_board.UpdateBoard();
@@ -42,7 +43,6 @@ public partial class Form1 : Form
         timer.Start();
 
         //数字ラベル
-        var numbers = new Label[9];
         var font = new Font("Arial", 32, FontStyle.Regular);
         for (int i = 0; i < 9; i++)
         {

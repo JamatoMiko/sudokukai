@@ -68,6 +68,8 @@ public class Board
     bool[,,] _po_num = new bool[9, 9, 9];
     //マスの数字を変更できるか
     public bool[,] _changeable = new bool[9, 9];
+    //各数字の個数
+    public int[] _numbers = new int[9];
     //乱数オブジェクト
     Random rnd = new Random();
     public Board()//コンストラクタ
@@ -76,7 +78,6 @@ public class Board
         UpdateBoard();
     }
     //プロパティ//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     //メソッド////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void InputCell(int row, int column, int number = 0)//_cellに数字を入力する
     {
@@ -482,12 +483,33 @@ public class Board
             }
         }
     }
-    public void UpdateBoard()//全般の情報の更新
+    void CountNumbers()
     {
-        UpdateBlock();
-        UpdateRow();
-        UpdateColumn();
+        for (int number = 0; number < 9; number++)
+        {
+            _numbers[number] = 0;
+        }
+        for (int row = 0; row < 9; row++)
+        {
+            for (int column = 0; column < 9; column++)
+            {
+                if (_cell[row, column] > 0)
+                {
+                    _numbers[_cell[row, column] - 1]++;
+                }
+            }
+        }
+    }
+    public bool UpdateBoard()//全般の情報の更新、矛盾していたらtrueを返す
+    {
+        bool result = false;
+        if (UpdateBlock() | UpdateRow() | UpdateColumn())
+        {
+            CountNumbers();
+            result = true;
+        }
         UpdatePossibility();
+        return result;
     }
     bool UpdateBlock()//ブロック情報_blockの更新、矛盾していたらtrueを返す
     {

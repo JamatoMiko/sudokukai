@@ -12,3 +12,4 @@ d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\refint\sud
 d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.pdb
 d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.genruntimeconfig.cache
 d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\ref\sudokukai.dll
+d:\新しいフォルダー (3)\C#\sudokukai\obj\Debug\net8.0-windows\sudokukai.sourcelink.json
