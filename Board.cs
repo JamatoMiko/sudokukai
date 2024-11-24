@@ -65,11 +65,12 @@ public class Board
     //列内に数字があるかどうか
     bool[,] _column = new bool[9, 9];
     //マスに数字が入るかどうか
-    bool[,,] _po_num = new bool[9, 9, 9];
+    bool[,,] _po_num = new bool[9, 9, 9];//[row, column, number]
     //マスの数字を変更できるか
     public bool[,] _changeable = new bool[9, 9];
     //各数字の個数
     public int[] _numbers = new int[9];
+    public bool[,,] _memo_num  = new bool[9, 9, 9];//[row, column, number]
     //乱数オブジェクト
     Random rnd = new Random();
     public Board()//コンストラクタ

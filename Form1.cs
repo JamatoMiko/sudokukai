@@ -7,9 +7,10 @@ namespace sudokukai;
 
 //Undoができるように
 //完成された盤面と完全に一致したらクリア
-//入力しきった数字のラベルを押せなくする、イベントハンドラを削除？、文字の色を薄くする、ラベルごと削除？
-//候補の数字を小さくメモれるように
+//入力しきった数字のラベルを押せなくする、イベントハンドラを削除？、文字の色を薄くする、ラベルごと削除？、Board._numbersを使用
+//メモのON/OFFの状態をわかりやすく
 //間違えられる回数に上限を
+//クリックイベントを左クリック限定に、右クリックでマスをクリア
 
 public partial class Form1 : Form
 {
@@ -18,11 +19,13 @@ public partial class Form1 : Form
     System.Windows.Forms.Timer timer;
     Point point;
     Label[] numbers = new Label[9];
+    Label memo = new Label();
     //列(column)がx座標、行(row)がy座標なことに注意
     int _cursor_row = 0;
     int _cursor_column = 0;
     int _cursor_number;
     bool[,] _match;
+    bool _memo;
     public Form1()//コンストラクタ
     {
         board = new Board();//現在の盤面
@@ -100,6 +103,16 @@ public partial class Form1 : Form
         erace.Click += new EventHandler(ClickErace);
         this.Controls.Add(erace);
 
+        //メモラベル
+        memo.Text = "OFF";
+        memo.Location = new Point (320+2*64, 96+3*64);
+        memo.ForeColor = Color.FromArgb(0x34, 0x48, 0x61);
+        memo.BackColor = Color.FromArgb(0xE3, 0xE7, 0xF0);
+        memo.Font = font;
+        memo.AutoSize = true;
+        memo.Click += new EventHandler(ClickMemo);
+        this.Controls.Add(memo);
+
         this.DoubleBuffered = true;
     }
 
@@ -154,11 +167,125 @@ public partial class Form1 : Form
     {
         Label numbers = (Label) sender;
         int number = int.Parse(numbers.Text);
-        board.InputCell(_cursor_row, _cursor_column, number);
+        if (_memo == false)
+        {
+            if (board._cell[_cursor_row, _cursor_column] != number)
+            {
+                board.InputCell(_cursor_row, _cursor_column, number);
+                //メモから入力した数字を消去
+                //ブロック
+                int block = board.IdentifyBlock(_cursor_row, _cursor_column);
+                int row = 0;
+                int column = 0;
+                switch (block)
+                {
+                    case 0:
+                        row = 0;
+                        column = 0;
+                        break;
+                    case 1:
+                        row = 0;
+                        column = 3;
+                        break;
+                    case 2:
+                        row = 0;
+                        column = 6;
+                        break;
+                    case 3:
+                        row = 3;
+                        column = 0;
+                        break;
+                    case 4:
+                        row = 3;
+                        column = 3;
+                        break;
+                    case 5:
+                        row = 3;
+                        column = 6;
+                        break;
+                    case 6:
+                        row = 6;
+                        column = 0;
+                        break;
+                    case 7:
+                        row = 6;
+                        column = 3;
+                        break;
+                    case 8:
+                        row = 6;
+                        column = 6;
+                        break;
+                }
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        board._memo_num[row + i, column + j, number - 1] = false;
+                    }
+                }
+                //行
+                for (int i = 0; i < 9; i++)
+                {
+                    board._memo_num[_cursor_row, i, number - 1] = false;
+                }
+                //列
+                for (int i = 0; i < 9; i++)
+                {
+                    board._memo_num[i, _cursor_column, number - 1] = false;
+                }
+            }
+            else
+            {
+                board.InputCell(_cursor_row, _cursor_column, 0);
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                board._memo_num[_cursor_row, _cursor_column, i] = false;
+            }
+        }
+        else//メモ
+        {
+            if (board._cell[_cursor_row, _cursor_column] == 0)
+            {
+                if (board._memo_num[_cursor_row, _cursor_column, number - 1] == false)
+                {
+                    board._memo_num[_cursor_row, _cursor_column, number - 1] = true;
+                }
+                else
+                {
+                    board._memo_num[_cursor_row, _cursor_column, number - 1] = false;
+                }
+            }
+        }
     }
     void ClickErace(object sender, EventArgs e)//消去をクリックしたときのイベント
     {
-        board.InputCell(_cursor_row, _cursor_column, 0);
+        if (_memo == false)
+        {
+            board.InputCell(_cursor_row, _cursor_column, 0);
+        }
+        else
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                board._memo_num[_cursor_row, _cursor_column, i] = false;
+            }
+        }
+    }
+    void ClickMemo(object sender, EventArgs e)//メモをクリックしたときのイベント
+    {
+        if (_memo == false)
+        {
+            _memo = true;
+            memo.Text = "ON";
+            Debug.WriteLine($"Memo {_memo}");
+        }
+        else
+        {
+            _memo = false;
+            memo.Text = "OFF";
+            Debug.WriteLine($"Memo {_memo}");
+        }
     }
     protected override void OnPaint(PaintEventArgs e)//描画処理
     {
@@ -169,7 +296,7 @@ public partial class Form1 : Form
         var brush3 = new SolidBrush(Color.FromArgb(0xBB, 0xDE, 0xFB));
         int row = 0;
         int column = 0;
-        //ブロック
+        //カーソルのブロックをハイライト
         //所属しているブロックを特定
         int block = board.IdentifyBlock(_cursor_row, _cursor_column);
         //開始位置を指定
@@ -219,19 +346,19 @@ public partial class Form1 : Form
                 e.Graphics.FillRectangle(brush1, 32*(column+j)+1, 32*(row+i)+1, 32, 32);
             }
         }
-        //行
+        //カーソルの行をハイライト
         row = _cursor_row;
         for (column = 0; column < 9; column++)
         {
             e.Graphics.FillRectangle(brush1, 32*column+1, 32*row+1, 32, 32);
         }
-        //列
+        //カーソルの列をハイライト
         column = _cursor_column;
         for (row = 0; row < 9; row++)
         {
             e.Graphics.FillRectangle(brush1, 32*column+1, 32*row+1, 32, 32);
         }
-        //カーソルと同じ数字
+        //カーソルと同じ数字をハイライト
         for (int i = 0; i < 9; i++)
         {
             for (int j = 0; j < 9; j++)
@@ -272,10 +399,12 @@ public partial class Form1 : Form
         pen2.Dispose();
 
         var font = new Font("Arial", 20, FontStyle.Regular);
+        var font2 = new Font("Arial", 6, FontStyle.Regular);
         var brush4 = new SolidBrush(Color.FromArgb(0x34, 0x48, 0x61));//元からある数字
         var brush5 = new SolidBrush(Color.FromArgb(0x32, 0x5A, 0xAF));//入力した数字
         var brush6 = new SolidBrush(Color.FromArgb(0xE5, 0x5C, 0x6C));//間違っている数字
-        //数字
+        var brush7 = new SolidBrush(Color.FromArgb(0x6E, 0x7C, 0x8C));//メモ
+        //数字、メモ
         for (int i = 0; i < 9; i++)//行
         {
             for (int j = 0; j < 9; j++)//列
@@ -295,15 +424,62 @@ public partial class Form1 : Form
                         e.Graphics.DrawString($"{board._cell[i, j]}", font, brush6, 32*j+6, 32*i+2);
                     }
                 }
+                else//空
+                {
+                    for (int number = 0; number < 9; number++)
+                    {
+                        switch (number)
+                        {
+                            case 0:
+                                row = 0;
+                                column = 0;
+                                break;
+                            case 1:
+                                row = 0;
+                                column = 3;
+                                break;
+                            case 2:
+                                row = 0;
+                                column = 6;
+                                break;
+                            case 3:
+                                row = 3;
+                                column = 0;
+                                break;
+                            case 4:
+                                row = 3;
+                                column = 3;
+                                break;
+                            case 5:
+                                row = 3;
+                                column = 6;
+                                break;
+                            case 6:
+                                row = 6;
+                                column = 0;
+                                break;
+                            case 7:
+                                row = 6;
+                                column = 3;
+                                break;
+                            case 8:
+                                row = 6;
+                                column = 6;
+                                break;
+                        }
+                        if (board._memo_num[i, j, number] == true)
+                        {
+                            e.Graphics.DrawString($"{number + 1}", font2, brush7, 32*j+3*column+5, 32*i+3*row+3);
+                        }
+                    }
+                }
             }
         }
         font.Dispose();
+        font2.Dispose();
         brush4.Dispose();
         brush5.Dispose();
         brush6.Dispose();
-
-        //数字ラベル
-
-
+        brush7.Dispose();
     }
 }
