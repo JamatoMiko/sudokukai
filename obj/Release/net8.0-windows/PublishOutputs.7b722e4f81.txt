@@ -1,0 +1,5 @@
+D:\新しいフォルダー (3)\C#\sudokukai\bin\Release\net8.0-windows\publish\sudokukai.exe
+D:\新しいフォルダー (3)\C#\sudokukai\bin\Release\net8.0-windows\publish\sudokukai.dll
+D:\新しいフォルダー (3)\C#\sudokukai\bin\Release\net8.0-windows\publish\sudokukai.deps.json
+D:\新しいフォルダー (3)\C#\sudokukai\bin\Release\net8.0-windows\publish\sudokukai.runtimeconfig.json
+D:\新しいフォルダー (3)\C#\sudokukai\bin\Release\net8.0-windows\publish\sudokukai.pdb

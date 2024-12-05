@@ -11,6 +11,7 @@ namespace sudokukai;
 //メモのON/OFFの状態をわかりやすく
 //間違えられる回数に上限を
 //クリックイベントを左クリック限定に、右クリックでマスをクリア
+//ゲームオーバーをイベントとして処理
 
 public partial class Form1 : Form
 {

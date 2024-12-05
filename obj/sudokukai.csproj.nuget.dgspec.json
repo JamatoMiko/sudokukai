@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj": {}
+    "D:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj": {}
   },
   "projects": {
-    "d:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj": {
+    "D:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj",
+        "projectUniqueName": "D:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj",
         "projectName": "sudokukai",
-        "projectPath": "d:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj",
+        "projectPath": "D:\\新しいフォルダー (3)\\C#\\sudokukai\\sudokukai.csproj",
         "packagesPath": "C:\\Users\\yusuke\\.nuget\\packages\\",
-        "outputPath": "d:\\新しいフォルダー (3)\\C#\\sudokukai\\obj\\",
+        "outputPath": "D:\\新しいフォルダー (3)\\C#\\sudokukai\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yusuke\\AppData\\Roaming\\NuGet\\NuGet.Config"
